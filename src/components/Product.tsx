@@ -41,7 +41,7 @@ export default function Product({
           </span>
           {/* Quantity */}
           <div className="flex gap-2">
-            <p className="bg-blue-100 flex items-center gap-2 rounded-sm px-2">
+            <span className="bg-blue-100 flex items-center gap-2 rounded-sm px-2">
               <Button
                 onClick={() => {
                   handleSubtractProductToCart();
@@ -63,7 +63,7 @@ export default function Product({
               >
                 +
               </Button>
-            </p>
+            </span>
             {/* Button */}
             <Button
               onClick={() => {
