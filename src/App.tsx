@@ -12,8 +12,8 @@ function App() {
       <main className="flex-1 flex flex-col items-center justify-center">
         {/* //TODO: ROUTES */}
         {/* <Home /> */}
-        <CheckoutSuccess />
-        {/* <Checkout /> */}
+        {/* <CheckoutSuccess /> */}
+        <Checkout />
       </main>
 
       <Footer />
