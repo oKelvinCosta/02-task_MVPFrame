@@ -1,5 +1,6 @@
 {
-  "name": "tt",
+  "name": "MVP-Frame",
+  "homepage": "https://github.com/oKelvinCosta/02-task_MVPFrame",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -7,7 +8,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.1.1",
