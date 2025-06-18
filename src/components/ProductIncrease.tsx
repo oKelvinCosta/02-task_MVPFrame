@@ -1,16 +1,26 @@
 import { Button } from "./ui/button";
 import { useProductsContext } from "@/context/ProductsContext";
 import { useCartContext } from "@/context/CartContext";
-import type { ProductsContextItem } from "@/context/ProductsContext";
+import type { ProductItem } from "@/assets/ProductsList";
+import type { ProductsContextProps } from "@/context/ProductsContext";
+import type { CartContextProps } from "@/context/CartContext";
 
-export function handleAddProductToCart(productId: string, productsContext, cartContext) {
+export function handleAddProductToCart(
+  productId: string,
+  productsContext: ProductsContextProps,
+  cartContext: CartContextProps
+) {
   const productsFromContext = productsContext.products;
   const { cart, setCartList } = cartContext;
 
-  // find product in products
+  // find product in products context
   const currentProduct = productsFromContext.find((product) => product.id === productId);
 
-  // find product in cart
+  if (!currentProduct) {
+    return;
+  }
+
+  // find product in cart context
   const productInCart = cart.find((item) => item.id === productId);
 
   // verify if product is already in cart and if stock is less than current product stock
@@ -27,7 +37,7 @@ export function handleAddProductToCart(productId: string, productsContext, cartC
   }
 }
 
-export default function ProductIncrease({ product, className }: { product: ProductsContextItem }) {
+export default function ProductIncrease({ product, className }: { product: ProductItem; className?: string }) {
   const productsContext = useProductsContext();
 
   const cartContext = useCartContext();

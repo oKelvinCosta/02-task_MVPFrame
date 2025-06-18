@@ -26,7 +26,7 @@ export default function CheckoutSuccess() {
                   <MapPinCheck />
                 </span>
                 <span>
-                  Entrega em <b>{currentCheckout.form.rua}</b> - Centro, Belo Horizonte - MG
+                  Entrega em <b>{currentCheckout?.form.rua}</b> - Centro, Belo Horizonte - MG
                 </span>
               </li>
               <li className="flex items-center gap-2">
@@ -47,7 +47,7 @@ export default function CheckoutSuccess() {
                 <div>
                   <div>Pagamento na entrega</div>
                   <div>
-                    <b>{payment[currentCheckout.form.paymentType]}</b>
+                    <b>{currentCheckout ? payment[currentCheckout.form.paymentType] : ""}</b>
                   </div>
                 </div>
               </li>

@@ -1,14 +1,7 @@
 import Img from "./Img";
-import type { ProductsContextItem } from "../context/ProductsContext";
+import type { ProductItem } from "../assets/ProductsList";
 
-export default function MvpFrame({
-  className,
-  product,
-  ...props
-}: {
-  className?: string;
-  product: ProductsContextItem;
-}) {
+export default function MvpFrame({ className, product, ...props }: { className?: string; product: ProductItem }) {
   const productStyles: Record<string, string> = {
     "MVP Lady Tanee": "max-w-[60%]",
     "MVP Boitatá": "max-w-[50%] !left-[52%]",

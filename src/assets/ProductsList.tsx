@@ -1,5 +1,5 @@
 export interface ProductItem {
-  id: number;
+  id: string;
   name: string;
   price: string;
   description: string;
@@ -9,7 +9,7 @@ export interface ProductItem {
   frameImg: string;
 }
 
-export const productsList = () => {
+export const productsList = (): ProductItem[] => {
   const list = [
     {
       name: "MVP Orc Herói",
@@ -22,7 +22,7 @@ export const productsList = () => {
     },
     {
       name: "MVP Eddga",
-      price: "89,90",
+      price: "69,90",
       description: "Quadro médio",
       size: "14,8 cm x 21cm",
       stock: 3,
@@ -49,7 +49,7 @@ export const productsList = () => {
     },
     {
       name: "MVP Lady Tanee",
-      price: "89,90",
+      price: "59,90",
       description: "Quadro pequeno",
       size: "14 cm x 14 cm",
       stock: 3,
@@ -67,7 +67,7 @@ export const productsList = () => {
     },
     {
       name: "MVP Boitatá",
-      price: "89,90",
+      price: "59,90",
       description: "Quadro pequeno",
       size: "14 cm x 14 cm",
       stock: 3,
@@ -94,7 +94,7 @@ export const productsList = () => {
     },
     {
       name: "MVP Detardeurus",
-      price: "89,90",
+      price: "69,90",
       description: "Quadro médio",
       size: "14,8 cm x 21cm",
       stock: 3,

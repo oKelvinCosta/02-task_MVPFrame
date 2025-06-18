@@ -3,8 +3,8 @@ import Product from "../components/Product";
 import { useProductsContext } from "../context/ProductsContext";
 
 export default function Home() {
-  const products = useProductsContext();
-  const productsList = products.products;
+  const productsContext = useProductsContext();
+  const productsList = productsContext.products;
 
   return (
     <>

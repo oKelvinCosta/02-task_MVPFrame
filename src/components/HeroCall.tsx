@@ -5,9 +5,6 @@ import { Swords, Award, ImagePlay, Usb } from "lucide-react";
 export default function HeroCall() {
   return (
     <header className={`relative bg-[url(${bgBlur})]`}>
-      {/* <div className={`bg-[url(${bgBlur})] bg-cover bg-center w-full h-full absolute  -z-20`} /> */}
-      {/* <Img src={bgBlur} className={`w-full h-full absolute -z-20`} /> */}
-
       <div className="container grid  md:grid-cols-12 items-center">
         <div className="md:col-span-7 order-2 md:order-1">
           <h1>Traga os MVPs de Ragnarok Online para sua estante!</h1>

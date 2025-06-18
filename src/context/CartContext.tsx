@@ -1,14 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { createContext, useContext } from "react";
 import type { ProductItem } from "../assets/ProductsList";
+import { z } from "zod";
+import { formSchema } from "../pages/Checkout";
 
-interface CartContextProps {
+export interface CartContextProps {
   cart: ProductItem[];
   setCartList: (cart: ProductItem[]) => void;
-  checkoutSuccess: any[];
-  setCheckoutSuccessList: (value: any[]) => void;
-  currentCheckout: any[];
-  setCurrentCheckoutHelper: (value: any[]) => void;
+  checkoutSuccess: checkoutSuccessProps[] | [];
+  setCheckoutSuccessList: (value: checkoutSuccessProps[]) => void;
+  currentCheckout: currentCheckoutProps | null;
+  setCurrentCheckoutHelper: (value: currentCheckoutProps) => void;
+}
+
+interface checkoutSuccessProps {
+  purchase: ProductItem[];
+  form: z.infer<typeof formSchema>;
+}
+
+interface currentCheckoutProps {
+  purchase: ProductItem[];
+  form: z.infer<typeof formSchema>;
 }
 
 const CartContext = createContext<CartContextProps | undefined>(undefined);
@@ -24,14 +36,14 @@ export default function CartContextProvider({ children }: { children: React.Reac
   });
 
   // Save all the transactions/purchases
-  const [checkoutSuccess, setCheckoutSuccess] = useState(() => {
+  const [checkoutSuccess, setCheckoutSuccess] = useState<checkoutSuccessProps[] | []>(() => {
     // Get from localStorage
     const storedCheckoutSuccess = localStorage.getItem(CHECKOUT_SUCCESS_KEY);
     return storedCheckoutSuccess ? JSON.parse(storedCheckoutSuccess) : [];
   });
 
   // To show infos in checkout sucess page
-  const [currentCheckout, setCurrentCheckout] = useState([]);
+  const [currentCheckout, setCurrentCheckout] = useState<currentCheckoutProps | null>(null);
 
   // IT GIVES ERROR!
   // useEffect(() => {
@@ -55,11 +67,11 @@ export default function CartContextProvider({ children }: { children: React.Reac
     setCart(cart);
   }
 
-  function setCheckoutSuccessList(value: any[]) {
+  function setCheckoutSuccessList(value: checkoutSuccessProps[] | []) {
     setCheckoutSuccess(value);
   }
 
-  function setCurrentCheckoutHelper(value: any[]) {
+  function setCurrentCheckoutHelper(value: currentCheckoutProps | null) {
     setCurrentCheckout(value);
   }
 

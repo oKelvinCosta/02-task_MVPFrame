@@ -1,20 +1,10 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { productsList } from "../assets/ProductsList";
+import type { ProductItem } from "../assets/ProductsList";
 
-interface ProductsContextProps {
-  products: ProductsContextItem[];
-  setProductsList: (products: ProductsContextItem[]) => void;
-}
-
-export interface ProductsContextItem {
-  name: string;
-  price: string;
-  description: string;
-  size: string;
-  stock: number;
-  id: number;
-  mvpImg: string;
-  frameImg: string;
+export interface ProductsContextProps {
+  products: ProductItem[];
+  setProductsList: (products: ProductItem[]) => void;
 }
 
 // More secure way to type the context
@@ -23,7 +13,8 @@ const ProductsContext = createContext<ProductsContextProps | undefined>(undefine
 const PRODUCTS_KEY = "@mvp-framer:products-v1.0.0";
 
 export default function ProductsContextProvider({ children }: { children: React.ReactNode }) {
-  const [products, setProducts] = useState<ProductsContextItem[]>(productsList());
+  // Load list from extern file
+  const [products, setProducts] = useState<ProductItem[]>(productsList());
 
   // Get products from localStorage
   useEffect(() => {
@@ -39,7 +30,7 @@ export default function ProductsContextProvider({ children }: { children: React.
   }, [products]);
 
   // Simplify setProducts type
-  function setProductsList(products: ProductsContextItem[]) {
+  function setProductsList(products: ProductItem[]) {
     setProducts(products);
   }
 

@@ -2,11 +2,11 @@ import MvpFrame from "./MvpFrame";
 import { ShoppingCart } from "lucide-react";
 import { Button } from "./ui/button";
 import ProductIncrease, { handleAddProductToCart } from "./ProductIncrease";
-import type { ProductsContextItem } from "@/context/ProductsContext";
+import type { ProductItem } from "@/assets/ProductsList";
 import { useProductsContext } from "@/context/ProductsContext";
 import { useCartContext } from "@/context/CartContext";
 
-export default function Product({ product }: { product: ProductsContextItem }) {
+export default function Product({ product }: { product: ProductItem }) {
   const productsContext = useProductsContext();
   const cartContext = useCartContext();
 

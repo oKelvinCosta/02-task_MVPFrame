@@ -8,14 +8,14 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useCartContext } from "@/context/CartContext";
-import type { ProductItem } from "@/assets/ProductsList";
 import { useMemo } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useProductsContext } from "@/context/ProductsContext";
+import type { UseFormReturn } from "react-hook-form";
 import ProductIncrease from "@/components/ProductIncrease";
 
-const formSchema = z.object({
+export const formSchema = z.object({
   cep: z
     .string()
     .min(8, "CEP deve ter 8 dígitos")
@@ -44,10 +44,14 @@ const formSchema = z.object({
   }),
 });
 
+interface AddressFormProps {
+  form: UseFormReturn<z.infer<typeof formSchema>>;
+}
+
 export default function Checkout() {
   const navigate = useNavigate();
   const cartContext = useCartContext();
-  const { cart, setCurrentCheckoutHelper, setCartList, setCheckoutSuccessList } = cartContext;
+  const { cart, setCurrentCheckoutHelper, setCartList, setCheckoutSuccessList, checkoutSuccess } = cartContext;
   const productsContext = useProductsContext();
   const { products, setProductsList } = productsContext;
 
@@ -87,7 +91,7 @@ export default function Checkout() {
 
     updateProductsStock();
 
-    setCheckoutSuccessList((state) => [...state, currentCheckout]);
+    setCheckoutSuccessList([...checkoutSuccess, currentCheckout]);
 
     navigate("/checkout-success");
   }
@@ -134,8 +138,7 @@ export default function Checkout() {
   );
 }
 
-function AdressForm({ form }) {
-  const [isCepValid, setIsCepValid] = useState(false);
+function AdressForm({ form }: AddressFormProps) {
   const [cepWasBlurred, setCepWasBlurred] = useState(false);
 
   return (
@@ -169,8 +172,7 @@ function AdressForm({ form }) {
                     }}
                     onBlur={async () => {
                       setCepWasBlurred(true);
-                      const isValid = await form.trigger("cep");
-                      setIsCepValid(isValid);
+                      await form.trigger("cep");
 
                       fetch(`https://viacep.com.br/ws/${field.value}/json/`)
                         .then((response) => response.json())
@@ -278,7 +280,7 @@ function AdressForm({ form }) {
   );
 }
 
-function PaymentMethodForm({ form }) {
+function PaymentMethodForm({ form }: AddressFormProps) {
   return (
     <>
       <div className="mt-6 border-2 bg-white border-blue-200 rounded-md p-6 md:p-10">
@@ -304,7 +306,7 @@ function PaymentMethodForm({ form }) {
                       </FormControl>
                       <FormLabel
                         htmlFor="credito"
-                        className="flex items-center bg-gray-100 justify-between rounded-md border-2 border-muted border-gray-300  p-4 hover:brightness-90 hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary cursor-pointer"
+                        className="flex items-center bg-gray-100 justify-between rounded-md border-2 border-gray-300  p-4 hover:brightness-90 hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary cursor-pointer"
                       >
                         <CreditCard className="text-blue-600" />
                         Cartão de crédito
@@ -316,7 +318,7 @@ function PaymentMethodForm({ form }) {
                       </FormControl>
                       <FormLabel
                         htmlFor="debito"
-                        className="flex items-center bg-gray-100 justify-between rounded-md border-2 border-muted border-gray-300  p-4 hover:brightness-90 hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary cursor-pointer"
+                        className="flex items-center bg-gray-100 justify-between rounded-md border-2  border-gray-300  p-4 hover:brightness-90 hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary cursor-pointer"
                       >
                         <Landmark className="text-blue-600" />
                         Cartão de débito
@@ -328,7 +330,7 @@ function PaymentMethodForm({ form }) {
                       </FormControl>
                       <FormLabel
                         htmlFor="dinheiro"
-                        className="flex items-center bg-gray-100 justify-between rounded-md border-2 border-muted border-gray-300  p-4 hover:brightness-90 hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary cursor-pointer"
+                        className="flex items-center bg-gray-100 justify-between rounded-md border-2 border-gray-300  p-4 hover:brightness-90 hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary cursor-pointer"
                       >
                         <Banknote className="text-blue-600" />
                         Dinheiro
@@ -407,36 +409,6 @@ function MvpsSelected({ adressIsFilled = true }) {
 function ProductsListCheckout() {
   const cartContext = useCartContext();
   const { cart, setCartList } = cartContext;
-
-  function handleAddProductToCart(productId: string) {
-    // Verify stock of products
-    const currentProduct = cart.find((product) => product.id === productId);
-    if (currentProduct) {
-      // verify if product is already in cart
-      const productInCart = cart.find((item) => item.id === productId);
-      if (productInCart) {
-        // if is in cart, update stock
-
-        const newProductInCart = cart.map((productItem) =>
-          productItem.id === productId ? { ...productItem, stock: productItem.stock + 1 } : productItem
-        );
-
-        setCartList(newProductInCart);
-      } else {
-        // if is not in cart, add to cart
-        setCartList([...cart, { ...currentProduct, stock: 1 }]);
-      }
-    }
-  }
-
-  function handleSubtractProductFromCart(productId: string) {
-    // If product is in Cart and stock >= 1
-    const newCart = cart
-      .map((cartItem) => (cartItem.id === productId ? { ...cartItem, stock: cartItem.stock - 1 } : cartItem))
-      .filter((cartItem) => cartItem.stock > 0);
-
-    setCartList(newCart);
-  }
 
   function handleRemoveProductFromCart(productId: string) {
     const newCart = cart.filter((cartItem) => cartItem.id !== productId);
