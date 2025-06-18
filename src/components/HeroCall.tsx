@@ -1,5 +1,5 @@
 import HeroImg from "./HeroImg";
-import bgBlur from "../assets/imgs/bg-blur.webp";
+import bgBlur from "/imgs/bg-blur.webp";
 import { Swords, Award, ImagePlay, Usb } from "lucide-react";
 
 export default function HeroCall() {
@@ -8,12 +8,12 @@ export default function HeroCall() {
       {/* <div className={`bg-[url(${bgBlur})] bg-cover bg-center w-full h-full absolute  -z-20`} /> */}
       {/* <Img src={bgBlur} className={`w-full h-full absolute -z-20`} /> */}
 
-      <div className="container grid  md:grid-cols-2 items-center">
-        <div className="order-2 md:order-1">
+      <div className="container grid  md:grid-cols-12 items-center">
+        <div className="md:col-span-7 order-2 md:order-1">
           <h1>Traga os MVPs de Ragnarok Online para sua estante!</h1>
           <p>Porta-retratos animados com os icônicos gifs dos chefes lendários que marcaram uma geração.</p>
           <p>Perfeitos para decorar seu setup gamer ou coleção!</p>
-          <ul className="mt-6 grid grid-cols-2 gap-y-3">
+          <ul className="mt-6 grid grid-cols-2 gap-1 gap-y-3 ">
             <li className="flex items-center gap-2">
               <span className="rounded-full bg-blue-600 min-w-10 h-10 flex items-center justify-center text-white">
                 <Swords />
@@ -40,7 +40,7 @@ export default function HeroCall() {
             </li>
           </ul>
         </div>
-        <div className="order-1 md:order-2">
+        <div className="md:col-span-5 order-1 md:order-2">
           <HeroImg />
         </div>
       </div>

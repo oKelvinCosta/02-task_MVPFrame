@@ -1,4 +1,11 @@
-export default function Img({ className, isCircle, ...props }) {
+import type { ImgHTMLAttributes } from "react";
+
+interface ImgProps extends ImgHTMLAttributes<HTMLImageElement> {
+  className: string;
+  isCircle?: boolean;
+}
+
+export default function Img({ className, isCircle = false, ...props }: ImgProps) {
   return (
     <>
       <img

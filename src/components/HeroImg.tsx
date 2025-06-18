@@ -1,10 +1,10 @@
 import Img from "./Img";
 
-import HeroFrame from "../assets/imgs/HeroFrame.png";
-import Gopinich from "../assets/imgs/Gopinich.gif";
-import Samurai from "../assets/imgs/Samurai.gif";
-import Snake from "../assets/imgs/Evil Snake Lord.gif";
-import TaoGunka from "../assets/imgs/Tao Gunka.gif";
+import HeroFrame from "/imgs/HeroFrame.png";
+import Gopinich from "/imgs/Gopinich.gif";
+import Samurai from "/imgs/Samurai.gif";
+import Snake from "/imgs/Evil Snake Lord.gif";
+import TaoGunka from "/imgs/Tao Gunka.gif";
 
 export default function HeroImg() {
   return (

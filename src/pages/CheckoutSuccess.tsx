@@ -1,8 +1,16 @@
 import { MapPinCheck, CalendarClock, Banknote } from "lucide-react";
 import Img from "../components/Img";
-import KingPoring from "../assets/imgs/KingPoring.gif";
+import KingPoring from "/imgs/KingPoring.gif";
+import { useCartContext } from "../context/CartContext";
 
 export default function CheckoutSuccess() {
+  const cartContext = useCartContext();
+  const { currentCheckout } = cartContext;
+  const payment = {
+    credito: "Cartão de Crédito",
+    debito: "Cartão de Débito",
+    dinheiro: "Dinheiro",
+  };
   return (
     <div className="py-10 lg:py-20">
       <div className="container">
@@ -18,7 +26,7 @@ export default function CheckoutSuccess() {
                   <MapPinCheck />
                 </span>
                 <span>
-                  Entrega em <b>Rua Rio de Janeiro, 471</b> - Centro, Belo Horizonte - MG
+                  Entrega em <b>{currentCheckout.form.rua}</b> - Centro, Belo Horizonte - MG
                 </span>
               </li>
               <li className="flex items-center gap-2">
@@ -39,7 +47,7 @@ export default function CheckoutSuccess() {
                 <div>
                   <div>Pagamento na entrega</div>
                   <div>
-                    <b>Cartão de Crédito</b>
+                    <b>{payment[currentCheckout.form.paymentType]}</b>
                   </div>
                 </div>
               </li>
